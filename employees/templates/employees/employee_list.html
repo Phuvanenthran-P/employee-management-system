@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employees</title>
+</head>
+<body>
+    <h1>Employee List</h1>
+
+    <ul>
+        {% for emp in employees %}
+            <li>
+                {{ emp.name }} — {{ emp.role }} — ₹{{ emp.salary }}
+            </li>
+        {% empty %}
+            <li>No employees found.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
