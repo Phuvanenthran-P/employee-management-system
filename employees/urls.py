@@ -1,10 +1,11 @@
 from django.urls import path
 from . import views
+from .views import EmployeeListView, EmployeeCreateView, EmployeeUpdateView, EmployeeDeleteView
 
 urlpatterns = [
-    path('', views.employee_list, name='employee_list'),
-    path('create/', views.employee_create, name='employee_create'),
-    path('update/<int:id>/', views.employee_update, name='employee_update'),
-    path('delete/<int:id>/', views.employee_delete, name='employee_delete'),
+    path("", EmployeeListView.as_view(), name="employee_list"),
+    path("create/", EmployeeCreateView.as_view(), name="employee_create"),
+    path("update/<int:pk>/", EmployeeUpdateView.as_view(), name="employee_update"),
+    path("delete/<int:pk>/", EmployeeDeleteView.as_view(), name="employee_delete"),
 
 ]
