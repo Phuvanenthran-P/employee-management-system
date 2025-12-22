@@ -9,7 +9,7 @@
     <ul>
         {% for emp in employees %}
             <li>
-                {{ emp.name }} — {{ emp.role }} — ₹{{ emp.salary }}
+                {{ emp.name }} — {{ emp.role }} — ₹{{ emp.salary }} <a href="{% url 'employee_update' emp.id %}">Edit</a>
             </li>
         {% empty %}
             <li>No employees found.</li>
