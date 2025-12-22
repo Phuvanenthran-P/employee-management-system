@@ -35,3 +35,17 @@ def employee_update(request, id):
     return render(request, 'employees/employee_form.html', {
         'form': form
     })
+
+def employee_delete(request, id):
+    employee = get_object_or_404(Employee, id=id)
+
+    if request.method == 'POST':
+        employee.delete()
+        return redirect('employee_list')
+
+    return render(
+        request,
+        'employees/employee_confirm_delete.html',
+        {'employee': employee}
+    )
+

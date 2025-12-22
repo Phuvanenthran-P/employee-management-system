@@ -6,10 +6,14 @@
 <body>
     <h1>Employee List</h1>
     <a href="{% url 'employee_create' %}">Add Employee</a>
+
     <ul>
         {% for emp in employees %}
             <li>
-                {{ emp.name }} — {{ emp.role }} — ₹{{ emp.salary }} <a href="{% url 'employee_update' emp.id %}">Edit</a>
+                {{ emp.name }} — {{ emp.role }} — ₹{{ emp.salary }}  <a href="{% url 'employee_update' emp.id %}">Edit</a> | <form action="{% url 'employee_delete' emp.id %}" method="get" style="display:inline;">
+    <button type="submit">Delete</button>
+</form>
+
             </li>
         {% empty %}
             <li>No employees found.</li>
