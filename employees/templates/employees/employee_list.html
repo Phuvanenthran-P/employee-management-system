@@ -4,20 +4,31 @@
     <title>Employees</title>
 </head>
 <body>
-    <h1>Employee List</h1>
-    <a href="{% url 'employee_create' %}">Add Employee</a>
+<h1>Employee List</h1>
+{% if perms.employees.add_employee %}
+<a href="{% url 'employee_create' %}">Add Employee</a>
+{% endif %}
 
-    <ul>
-        {% for emp in employees %}
-            <li>
-                {{ emp.name }} — {{ emp.role }} — ₹{{ emp.salary }}  <a href="{% url 'employee_update' emp.id %}">Edit</a> | <form action="{% url 'employee_delete' emp.id %}" method="get" style="display:inline;">
-    <button type="submit">Delete</button>
-</form>
 
-            </li>
-        {% empty %}
-            <li>No employees found.</li>
-        {% endfor %}
-    </ul>
+<ul>
+{% for emp in employees %}
+    <li>
+        {{ emp.name }} — {{ emp.role }} — ₹{{ emp.salary }}
+
+        {% if perms.employees.change_employee %}
+            <a href="{% url 'employee_update' emp.id %}">Edit</a>
+        {% endif %}
+
+        |
+
+        {% if perms.employees.delete_employee %}
+            <a href="{% url 'employee_delete' emp.id %}">Delete</a>
+        {% endif %}
+    </li>
+{% empty %}
+    <li>No employees found.</li>
+{% endfor %}
+</ul>
+
 </body>
 </html>
