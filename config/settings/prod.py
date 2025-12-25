@@ -1,0 +1,11 @@
+from .base import *
+
+DEBUG = False
+
+ALLOWED_HOSTS = ["*"]
+
+SECRET_KEY = os.environ["SECRET_KEY"]
+
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
