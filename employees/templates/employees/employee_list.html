@@ -1,39 +1,69 @@
 {% extends "base.html" %}
+{% block title %}Employees{% endblock %}
 
 {% block content %}
-<h1>Employee List</h1>
-
-<form method="get">
-    <input
-        type="text"
-        name="q"
-        placeholder="Search by name or role"
-        value="{{ request.GET.q }}"
-    >
-    <button type="submit">Search</button>
-</form>
-
-<hr>
+<h1>Employees</h1>
 
 {% if perms.employees.add_employee %}
-<a href="{% url 'employee_create' %}">Add Employee</a>
+    <a href="{% url 'employee_create' %}">
+        <button class="btn-primary">Add Employee</button>
+    </a>
 {% endif %}
 
-<ul>
-{% for emp in employees %}
-    <li>
-        {{ emp.name }} — {{ emp.role }} — ₹{{ emp.salary }}
+<br><br>
 
-        {% if perms.employees.change_employee %}
-            <a href="{% url 'employee_update' emp.id %}">Edit</a>
+<form method="get">
+    <input type="text" name="q" placeholder="Search by name or role">
+    <button class="btn-primary">Search</button>
+</form>
+
+<br>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Role</th>
+        <th>Salary</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for emp in employees %}
+    <tr>
+        <td>{{ emp.name }}</td>
+        <td>{{ emp.role }}</td>
+        <td>₹{{ emp.salary }}</td>
+        <td>
+            {% if perms.employees.change_employee %}
+                <a href="{% url 'employee_update' emp.id %}">Edit</a>
+            {% endif %}
+            {% if perms.employees.delete_employee %}
+                |
+                <a href="{% url 'employee_delete' emp.id %}">Delete</a>
+            {% endif %}
+        </td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="4">No employees found.</td>
+    </tr>
+    {% endfor %}
+</table>
+<div style="margin-top: 20px;">
+    {% if is_paginated %}
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">
+                Previous
+            </a>
         {% endif %}
 
-        {% if perms.employees.delete_employee %}
-            | <a href="{% url 'employee_delete' emp.id %}">Delete</a>
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">
+                Next
+            </a>
         {% endif %}
-    </li>
-{% empty %}
-    <li>No employees found.</li>
-{% endfor %}
-</ul>
+    {% endif %}
+</div>
+
 {% endblock %}
