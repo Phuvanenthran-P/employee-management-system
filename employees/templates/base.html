@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Employee Manager{% endblock %}</title>
+</head>
+<body>
+
+{% if user.is_authenticated %}
+<p>
+    Logged in as {{ user.username }} |
+    <form method="post" action="{% url 'logout' %}">
+    {% csrf_token %}
+    <button type="submit">Logout</button>
+</form>
+
+</p>
+{% endif %}
+
+<hr>
+
+{% block content %}{% endblock %}
+
+</body>
+</html>

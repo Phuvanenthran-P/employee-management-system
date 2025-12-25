@@ -1,7 +1,7 @@
-<!DOCTYPE html>
-<html>
-<body>
+{% extends "base.html" %}
+{% block title %}Employee Form{% endblock %}
 
+{% block content %}
 <h2>Employee Form</h2>
 
 <form method="post">
@@ -9,6 +9,4 @@
     {{ form.as_p }}
     <button type="submit">Save</button>
 </form>
-
-</body>
-</html>
+{% endblock %}

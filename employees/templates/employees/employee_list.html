@@ -1,14 +1,23 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Employees</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block content %}
 <h1>Employee List</h1>
+
+<form method="get">
+    <input
+        type="text"
+        name="q"
+        placeholder="Search by name or role"
+        value="{{ request.GET.q }}"
+    >
+    <button type="submit">Search</button>
+</form>
+
+<hr>
+
 {% if perms.employees.add_employee %}
 <a href="{% url 'employee_create' %}">Add Employee</a>
 {% endif %}
-
 
 <ul>
 {% for emp in employees %}
@@ -19,16 +28,12 @@
             <a href="{% url 'employee_update' emp.id %}">Edit</a>
         {% endif %}
 
-        |
-
         {% if perms.employees.delete_employee %}
-            <a href="{% url 'employee_delete' emp.id %}">Delete</a>
+            | <a href="{% url 'employee_delete' emp.id %}">Delete</a>
         {% endif %}
     </li>
 {% empty %}
     <li>No employees found.</li>
 {% endfor %}
 </ul>
-
-</body>
-</html>
+{% endblock %}
